@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>引导式旅游攻略｜上海出发：武功山 / 宣城泾县 / 宁德霞浦 / 台州临海</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.1);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.72);
+        --muted2: rgba(255, 255, 255, 0.6);
+        --brand: #66e3c4;
+        --brand2: #74a7ff;
+        --warn: #ffcf5a;
+        --danger: #ff6b6b;
+        --ok: #80ed99;
+        --border: rgba(255, 255, 255, 0.16);
+        --shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+        --radius: 18px;
+        --radius2: 12px;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f7fafc;
+          --panel: rgba(0, 0, 0, 0.04);
+          --panel2: rgba(0, 0, 0, 0.06);
+          --text: rgba(0, 0, 0, 0.88);
+          --muted: rgba(0, 0, 0, 0.68);
+          --muted2: rgba(0, 0, 0, 0.55);
+          --border: rgba(0, 0, 0, 0.12);
+          --shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1100px 520px at 30% -10%, rgba(102, 227, 196, 0.25), transparent 60%),
+          radial-gradient(900px 520px at 90% 10%, rgba(116, 167, 255, 0.25), transparent 62%),
+          radial-gradient(900px 560px at 50% 120%, rgba(255, 207, 90, 0.15), transparent 60%),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 18px 0 72px;
+      }
+      .nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.02));
+        border-radius: 999px;
+        box-shadow: var(--shadow);
+      }
+      .nav .left {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .logo {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        font-weight: 820;
+        letter-spacing: 0.2px;
+      }
+      .navlinks {
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .navlinks a {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .navlinks a:hover {
+        filter: brightness(1.06);
+      }
+      .card {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.02));
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .pad {
+        padding: 18px;
+      }
+      header.hero {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 14px;
+      }
+      @media (max-width: 980px) {
+        header.hero {
+          grid-template-columns: 1fr;
+        }
+      }
+      .title {
+        margin: 0;
+        font-size: clamp(26px, 3vw, 40px);
+        letter-spacing: 0.2px;
+      }
+      .sub {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .pillrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .pill {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--panel2);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .pill strong {
+        font-weight: 700;
+        color: var(--text);
+      }
+      button {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: var(--panel2);
+        color: var(--text);
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 700;
+      }
+      button.primary {
+        border: none;
+        background: linear-gradient(90deg, rgba(102, 227, 196, 0.95), rgba(116, 167, 255, 0.95));
+        color: rgba(0, 0, 0, 0.82);
+      }
+      button:hover:not(:disabled) {
+        filter: brightness(1.06);
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .art {
+        height: 100%;
+        padding: 12px;
+        display: grid;
+        place-items: center;
+      }
+      .art svg {
+        width: 100%;
+        max-width: 520px;
+        height: auto;
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: 0.2px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+      @media (max-width: 980px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      .choices {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      @media (min-width: 760px) {
+        .choices.cols2 {
+          grid-template-columns: 1fr 1fr;
+        }
+        .choices.cols3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .choice {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 10px;
+        align-items: start;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        cursor: pointer;
+      }
+      .choice:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .choice input {
+        margin-top: 3px;
+      }
+      .choice .t {
+        font-weight: 780;
+      }
+      .choice .d {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      .cards {
+        display: grid;
+        gap: 12px;
+      }
+      .destgrid {
+        display: grid;
+        gap: 12px;
+      }
+      @media (min-width: 900px) {
+        .destgrid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .dest {
+        border: 1px solid var(--border);
+        border-radius: var(--radius2);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+        display: grid;
+      }
+      .dest .top {
+        padding: 14px 14px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: grid;
+        gap: 6px;
+      }
+      .dest h3 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: 0.15px;
+      }
+      .meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .thumbs {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+        padding: 10px;
+      }
+      .thumbs img {
+        width: 100%;
+        height: 108px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .dest .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 0 14px 14px;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .tag b {
+        color: var(--text);
+        font-weight: 750;
+      }
+      .bar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .mini {
+        font-size: 12px;
+        color: var(--muted2);
+      }
+      .result {
+        display: grid;
+        gap: 10px;
+      }
+      .pick {
+        border: 1px solid var(--border);
+        border-radius: var(--radius2);
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        display: grid;
+        gap: 10px;
+      }
+      .pick a.go {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .pick a.go:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .pick .go .left {
+        display: grid;
+        gap: 2px;
+      }
+      .pick .go .left .t {
+        font-weight: 800;
+      }
+      .pick .go .left .d {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .footer {
+        margin-top: 16px;
+        padding: 16px 18px;
+        color: var(--muted2);
+        font-size: 12px;
+      }
+      .notice {
+        border-left: 3px solid rgba(255, 207, 90, 0.85);
+        padding-left: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .notice b {
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav" aria-label="站点导航">
+        <div class="left">
+          <span class="logo">引导式攻略</span>
+          <div class="navlinks" aria-label="快速入口">
+            <a href="wugongshan-guide.html">武功山</a>
+            <a href="xuancheng-guide.html">宣城·泾县</a>
+            <a href="ningde-xiapu-guide.html">宁德·霞浦</a>
+            <a href="taizhou-linhai-guide.html">台州·临海</a>
+          </div>
+        </div>
+        <div class="navlinks">
+          <a href="#picker">先做选择</a>
+          <a href="#all">全部目的地</a>
+        </div>
+      </nav>
+
+      <header class="hero">
+        <section class="card pad">
+          <h1 class="title">上海出发：一站式引导性旅游攻略</h1>
+          <p class="sub">
+            不用从零做功课：先选“你想要的感觉”，系统就把最匹配的目的地与行程模板推给你。每个目的地都有自己的“选择器”，点进去能继续细化为具体日程。
+          </p>
+          <div class="pillrow">
+            <span class="pill"><strong>徒步</strong>武功山草甸</span>
+            <span class="pill"><strong>徽派</strong>宣城泾县/查济</span>
+            <span class="pill"><strong>摄影</strong>宁德霞浦</span>
+            <span class="pill"><strong>城墙小吃</strong>台州临海</span>
+          </div>
+          <div class="bar">
+            <button class="primary" id="btnStart">开始选目的地</button>
+            <button id="btnReset" title="清空选择">重置</button>
+            <span class="tag"><b>当前选择</b><span id="chip">未完成</span></span>
+          </div>
+          <div class="mini" id="miniTip" style="margin-top: 8px"></div>
+        </section>
+        <section class="card">
+          <div class="art" aria-hidden="true">
+            <svg viewBox="0 0 760 430" role="img">
+              <defs>
+                <linearGradient id="gSky" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(116,167,255,0.85)" />
+                  <stop offset="55%" stop-color="rgba(102,227,196,0.55)" />
+                  <stop offset="100%" stop-color="rgba(255,207,90,0.25)" />
+                </linearGradient>
+                <linearGradient id="gLand" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(128,237,153,0.55)" />
+                  <stop offset="100%" stop-color="rgba(102,227,196,0.14)" />
+                </linearGradient>
+                <linearGradient id="gSea" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(116,167,255,0.22)" />
+                  <stop offset="100%" stop-color="rgba(116,167,255,0.06)" />
+                </linearGradient>
+                <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" />
+                </filter>
+              </defs>
+              <rect x="0" y="0" width="760" height="430" rx="20" fill="url(#gSky)" />
+              <g opacity="0.22" filter="url(#soft)">
+                <circle cx="130" cy="92" r="55" fill="white" />
+                <circle cx="190" cy="92" r="45" fill="white" />
+                <circle cx="160" cy="62" r="35" fill="white" />
+                <circle cx="640" cy="92" r="58" fill="white" />
+                <circle cx="590" cy="96" r="42" fill="white" />
+                <circle cx="625" cy="62" r="30" fill="white" />
+              </g>
+              <path d="M0,292 C120,250 210,240 300,250 C420,264 480,218 590,220 C680,221 720,208 760,196 L760,430 L0,430 Z" fill="url(#gLand)" />
+              <path d="M0,340 C160,330 240,310 340,320 C450,330 550,360 760,360 L760,430 L0,430 Z" fill="url(#gSea)" />
+              <g fill="rgba(0,0,0,0.7)" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+                <text x="46" y="70" font-size="16" font-weight="800">一页入口</text>
+                <text x="46" y="92" font-size="13" font-weight="600" fill="rgba(0,0,0,0.55)">徒步 / 古村 / 海边 / 城墙小吃</text>
+              </g>
+              <g>
+                <circle cx="160" cy="250" r="8" fill="rgba(255,255,255,0.85)" />
+                <text x="176" y="255" font-size="13" font-weight="700" fill="rgba(0,0,0,0.6)">宣城泾县</text>
+                <circle cx="360" cy="300" r="8" fill="rgba(255,255,255,0.85)" />
+                <text x="376" y="305" font-size="13" font-weight="700" fill="rgba(0,0,0,0.6)">临海府城</text>
+                <circle cx="560" cy="320" r="8" fill="rgba(255,255,255,0.85)" />
+                <text x="576" y="325" font-size="13" font-weight="700" fill="rgba(0,0,0,0.6)">霞浦滩涂</text>
+                <circle cx="610" cy="210" r="8" fill="rgba(255,255,255,0.85)" />
+                <text x="626" y="215" font-size="13" font-weight="700" fill="rgba(0,0,0,0.6)">武功山</text>
+              </g>
+            </svg>
+          </div>
+        </section>
+      </header>
+
+      <section class="grid2" id="picker">
+        <section class="card pad">
+          <h2>目的地选择器（先选感觉）</h2>
+          <div class="notice">
+            <b>使用方式：</b>按偏好选一遍，你会得到 1–2 个“最匹配”入口；点进去后，再用该目的地的专属选择器生成详细日程。
+          </div>
+
+          <div class="choices cols2" role="radiogroup" aria-label="偏好类型" style="margin-top: 12px">
+            <label class="choice">
+              <input type="radio" name="vibe" value="hike" />
+              <div>
+                <div class="t">想走路看风景（强自然）</div>
+                <div class="d">草甸、云海、日出日落；能接受体力消耗</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="vibe" value="village" />
+              <div>
+                <div class="t">想慢逛古村（安静耐看）</div>
+                <div class="d">徽派古建、沿溪散步、商业化低</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="vibe" value="photo" />
+              <div>
+                <div class="t">想拍照出片（海边光影）</div>
+                <div class="d">日出滩涂、竹筏晨雾、日落村落</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="vibe" value="foodwalk" />
+              <div>
+                <div class="t">想轻松城市漫步（吃逛为主）</div>
+                <div class="d">城墙步道不累、古街糯叽叽小吃</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="choices cols3" role="radiogroup" aria-label="时间预算">
+            <label class="choice">
+              <input type="radio" name="days" value="2" />
+              <div>
+                <div class="t">2天1夜</div>
+                <div class="d">周末/短假最常用模板</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="days" value="3" />
+              <div>
+                <div class="t">3天2夜</div>
+                <div class="d">节奏更松，能多留“机动”</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="days" value="flex" />
+              <div>
+                <div class="t">不确定</div>
+                <div class="d">先按偏好推荐，再进去细化</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="choices cols3" role="radiogroup" aria-label="是否愿意早起">
+            <label class="choice">
+              <input type="radio" name="sunrise" value="yes" />
+              <div>
+                <div class="t">愿意早起追日出</div>
+                <div class="d">更适合霞浦/武功山</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="sunrise" value="no" />
+              <div>
+                <div class="t">不想早起</div>
+                <div class="d">更适合宣城/临海慢逛</div>
+              </div>
+            </label>
+            <label class="choice">
+              <input type="radio" name="sunrise" value="maybe" />
+              <div>
+                <div class="t">看情况</div>
+                <div class="d">给出两手准备</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="bar">
+            <span class="tag"><b>建议</b><span id="hint">完成选择后出现</span></span>
+          </div>
+        </section>
+
+        <section class="card pad">
+          <h2>推荐入口</h2>
+          <div class="muted" style="font-size: 13px; margin-top: -4px">会给出 1–2 个“最匹配”目的地。你也可以跳过选择，直接在下方列表点进去。</div>
+          <div class="result" id="result" style="margin-top: 12px"></div>
+        </section>
+      </section>
+
+      <section class="card pad" id="all" style="margin-top: 14px">
+        <h2>全部目的地（直接点进去）</h2>
+        <div class="muted" style="font-size: 13px; margin-top: -4px">每个页面都有自己的“选择器”，能按住不住/是否自驾/是否早起/强度等生成详细方案。</div>
+        <div class="destgrid" style="margin-top: 12px">
+          <article class="dest">
+            <div class="top">
+              <h3>江西武功山｜端午徒步（正穿/反穿/夜爬）</h3>
+              <div class="meta">
+                <span>适合：徒步党 / 草甸控</span>
+                <span>关键词：金顶 / 吊马桩 / 日出</span>
+              </div>
+              <div class="bar">
+                <span class="tag"><b>强度</b>中→高</span>
+                <span class="tag"><b>看日出</b>最稳</span>
+                <span class="tag"><b>雨季</b>注意风雨雾</span>
+              </div>
+            </div>
+            <div class="thumbs">
+              <img loading="lazy" alt="武功山草甸示意" src="https://commons.wikimedia.org/wiki/Special:FilePath/Wugong%20Mountains%20-%20Wikimedia%20Commons%20Logo%20demo.png" onerror="this.style.display='none'" />
+              <img loading="lazy" alt="武功山" src="https://commons.wikimedia.org/wiki/Special:FilePath/Wugong_Mountains.jpg" onerror="this.style.display='none'" />
+              <img loading="lazy" alt="山脊" src="https://commons.wikimedia.org/wiki/Special:FilePath/Wugongshan.jpg" onerror="this.style.display='none'" />
+            </div>
+            <div class="actions">
+              <a class="tag" href="wugongshan-guide.html"><b>进入</b>选择器</a>
+            </div>
+          </article>
+
+          <article class="dest">
+            <div class="top">
+              <h3>安徽宣城（泾县/查济/桃花潭/敬亭山）｜徽派古建慢逛</h3>
+              <div class="meta">
+                <span>上海→宣城约 2.5–3h</span>
+                <span>适合：慢逛/古建/低商业</span>
+              </div>
+              <div class="bar">
+                <span class="tag"><b>强度</b>低→中</span>
+                <span class="tag"><b>玩法</b>古村+水边+小山</span>
+              </div>
+            </div>
+            <div class="thumbs">
+              <img loading="lazy" alt="查济古村" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jingxian%20Zhaji%202017.08.19%2017-24-24.jpg" />
+              <img loading="lazy" alt="桃花潭" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jingxian%20Taohuatan%202017.08.19%2006-47-25.jpg" />
+              <img loading="lazy" alt="徽派建筑" src="https://commons.wikimedia.org/wiki/Special:FilePath/Huizhou_architecture.jpg" onerror="this.style.display='none'" />
+            </div>
+            <div class="actions">
+              <a class="tag" href="xuancheng-guide.html"><b>进入</b>选择器</a>
+            </div>
+          </article>
+
+          <article class="dest">
+            <div class="top">
+              <h3>福建宁德·霞浦（北岐/杨家溪/东壁）｜滩涂光影与海边村落</h3>
+              <div class="meta">
+                <span>上海虹桥→宁德约 3–3.5h</span>
+                <span>适合：摄影/早起/日落</span>
+              </div>
+              <div class="bar">
+                <span class="tag"><b>强度</b>低→中</span>
+                <span class="tag"><b>关键</b>潮汐+天气</span>
+              </div>
+            </div>
+            <div class="thumbs">
+              <img loading="lazy" alt="霞浦县影集" src="https://commons.wikimedia.org/wiki/Special:FilePath/%E9%9C%9E%E6%B5%A6%E5%8E%BF%E5%BD%B1%E9%9B%86.png" />
+              <img loading="lazy" alt="东海渔船" src="https://commons.wikimedia.org/wiki/Special:FilePath/%E9%9C%9E%E6%B5%A6%E7%9C%8C%E3%81%AE%E3%81%82%E3%82%8B%E5%B3%B6%E3%81%AE%E5%B2%B8%E3%81%A7%E6%B3%8A%E3%81%BE%E3%82%8B%E6%BC%81%E8%88%B9%E5%9B%A3.jpg" />
+              <img loading="lazy" alt="海岸" src="https://commons.wikimedia.org/wiki/Special:FilePath/East_China_Sea.jpg" onerror="this.style.display='none'" />
+            </div>
+            <div class="actions">
+              <a class="tag" href="ningde-xiapu-guide.html"><b>进入</b>选择器</a>
+            </div>
+          </article>
+
+          <article class="dest">
+            <div class="top">
+              <h3>浙江台州·临海｜府城墙（江南长城）+ 紫阳古街糯叽叽小吃</h3>
+              <div class="meta">
+                <span>上海虹桥→临海约 2.5h</span>
+                <span>适合：不费劲走走逛逛</span>
+              </div>
+              <div class="bar">
+                <span class="tag"><b>强度</b>低</span>
+                <span class="tag"><b>关键词</b>城墙步道 / 古街</span>
+              </div>
+            </div>
+            <div class="thumbs">
+              <img loading="lazy" alt="紫阳古街" src="https://commons.wikimedia.org/wiki/Special:FilePath/%E7%B4%AB%E9%98%B3%E5%8F%A4%E8%A1%97.JPG" />
+              <img loading="lazy" alt="东湖" src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20East%20Lake%20in%20Linhai%2001%202017-01.jpg" />
+              <img loading="lazy" alt="临海" src="https://commons.wikimedia.org/wiki/Special:FilePath/Linhai%20Zhejiang.jpg" onerror="this.style.display='none'" />
+            </div>
+            <div class="actions">
+              <a class="tag" href="taizhou-linhai-guide.html"><b>进入</b>选择器</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="card footer">
+        <div>
+          部署为线上网址：把本目录完整上传到 GitHub 仓库（至少包含 <span style="font-family: var(--mono)">index.html</span> 和几个 <span style="font-family: var(--mono)">*-guide.html</span>），再开启 GitHub Pages 即可。
+        </div>
+        <div style="margin-top: 8px">
+          图片来源：页面内使用 Wikimedia Commons 外链图片（如遇加载慢，可换成你自己的图床或下载后本地放置再引用）。
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+      const state = { vibe: null, days: null, sunrise: null };
+
+      function getChecked(name) {
+        return (document.querySelector(`input[name="${name}"]:checked`) || {}).value || null;
+      }
+
+      function readState() {
+        state.vibe = getChecked("vibe");
+        state.days = getChecked("days");
+        state.sunrise = getChecked("sunrise");
+      }
+
+      function chipText() {
+        const parts = [];
+        if (state.vibe) {
+          parts.push(
+            {
+              hike: "徒步自然",
+              village: "徽派古村",
+              photo: "海边摄影",
+              foodwalk: "城墙小吃"
+            }[state.vibe]
+          );
+        }
+        if (state.days) parts.push(state.days === "flex" ? "时间未定" : `${state.days}天`);
+        if (state.sunrise) parts.push({ yes: "愿意早起", no: "不早起", maybe: "看情况" }[state.sunrise]);
+        return parts.length ? parts.join(" · ") : "未完成";
+      }
+
+      function miniTip() {
+        if (!state.vibe || !state.days || !state.sunrise) return "选完三项，会给出最匹配入口。";
+        if (state.vibe === "photo" && state.sunrise === "no") return "你偏摄影但不想早起：更建议追日落/傍晚蓝调，或改临海轻松逛。";
+        if (state.vibe === "hike" && state.days === "2") return "2天走武功山最稳：建议住一晚看日出日落。";
+        return "已完成选择：右侧给出推荐入口。";
+      }
+
+      function renderRecommendations() {
+        const r = $("#result");
+        if (!state.vibe || !state.days || !state.sunrise) {
+          r.innerHTML = "<div class='muted'>还差一步：完成左侧三项选择。</div>";
+          $("#hint").textContent = "完成选择后出现";
+          return;
+        }
+
+        const picks = [];
+
+        const wantSunrise = state.sunrise === "yes";
+        const avoidSunrise = state.sunrise === "no";
+
+        if (state.vibe === "hike") {
+          picks.push({
+            href: "wugongshan-guide.html",
+            title: "武功山（正穿/反穿/夜爬选择器）",
+            desc: wantSunrise ? "直接做“住不住/正反穿/夜爬”选择，生成详细日程。" : "不早起也能玩：选“住金顶省力版”或白天徒步组合。"
+          });
+          if (state.days === "3") {
+            picks.push({
+              href: "xuancheng-guide.html",
+              title: "宣城泾县（古村放松作为备选）",
+              desc: "如果天气对徒步不友好，宣城是更稳的 Plan B。"
+            });
+          }
+        }
+
+        if (state.vibe === "village") {
+          picks.push({
+            href: "xuancheng-guide.html",
+            title: "宣城·泾县（查济—桃花潭—敬亭山）",
+            desc: "古建+溪水+小山一线串起来，节奏慢、商业化低。"
+          });
+          if (state.days !== "2") {
+            picks.push({
+              href: "taizhou-linhai-guide.html",
+              title: "临海（城墙+古街，轻松补一天）",
+              desc: "如果你想把节奏再放慢，临海很适合。"
+            });
+          }
+        }
+
+        if (state.vibe === "photo") {
+          picks.push({
+            href: "ningde-xiapu-guide.html",
+            title: "宁德·霞浦（滩涂日出/杨家溪晨雾/东壁日落）",
+            desc: wantSunrise ? "建议追日出：把潮汐/天气作为第一优先级。" : "不想早起：主打东壁日落+傍晚光影，早晨留机动。"
+          });
+          if (avoidSunrise) {
+            picks.push({
+              href: "taizhou-linhai-guide.html",
+              title: "临海（不早起也能玩得很满）",
+              desc: "城墙步道坡度平缓，夜宵小吃密度高。"
+            });
+          }
+        }
+
+        if (state.vibe === "foodwalk") {
+          picks.push({
+            href: "taizhou-linhai-guide.html",
+            title: "台州·临海（府城墙 + 紫阳古街）",
+            desc: "不用卷体力，主打走走看看+糯叽叽小吃。"
+          });
+          if (state.days === "3") {
+            picks.push({
+              href: "xuancheng-guide.html",
+              title: "宣城（古村放空作为第二站）",
+              desc: "3天可拆成“临海轻松逛 + 宣城古村慢逛”。"
+            });
+          }
+        }
+
+        $("#hint").textContent = "点击入口继续细化";
+        r.innerHTML = picks
+          .slice(0, 2)
+          .map(
+            (p) => `
+              <div class="pick">
+                <a class="go" href="${p.href}">
+                  <div class="left">
+                    <div class="t">${escapeHtml(p.title)}</div>
+                    <div class="d">${escapeHtml(p.desc)}</div>
+                  </div>
+                  <div class="tag"><b>打开</b>→</div>
+                </a>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function render() {
+        readState();
+        $("#chip").textContent = chipText();
+        $("#miniTip").textContent = miniTip();
+        renderRecommendations();
+      }
+
+      function resetAll() {
+        $$("input[type=radio]").forEach((el) => (el.checked = false));
+        render();
+      }
+
+      function wire() {
+        $$("input[type=radio]").forEach((el) => el.addEventListener("change", render));
+        $("#btnStart").addEventListener("click", () => $("#picker").scrollIntoView({ behavior: "smooth", block: "start" }));
+        $("#btnReset").addEventListener("click", resetAll);
+      }
+
+      wire();
+      render();
+    </script>
+  </body>
+</html>
+

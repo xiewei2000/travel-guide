@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>台州·临海（府城墙/紫阳古街）引导式攻略｜上海出发</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.1);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.72);
+        --muted2: rgba(255, 255, 255, 0.6);
+        --brand: #66e3c4;
+        --brand2: #74a7ff;
+        --warn: #ffcf5a;
+        --danger: #ff6b6b;
+        --ok: #80ed99;
+        --border: rgba(255, 255, 255, 0.16);
+        --shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+        --radius: 18px;
+        --radius2: 12px;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f7fafc;
+          --panel: rgba(0, 0, 0, 0.04);
+          --panel2: rgba(0, 0, 0, 0.06);
+          --text: rgba(0, 0, 0, 0.88);
+          --muted: rgba(0, 0, 0, 0.68);
+          --muted2: rgba(0, 0, 0, 0.55);
+          --border: rgba(0, 0, 0, 0.12);
+          --shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1100px 520px at 30% -10%, rgba(102, 227, 196, 0.25), transparent 60%),
+          radial-gradient(900px 520px at 90% 10%, rgba(116, 167, 255, 0.25), transparent 62%),
+          radial-gradient(900px 560px at 50% 120%, rgba(255, 207, 90, 0.15), transparent 60%),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        width: min(1080px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 18px 0 72px;
+      }
+      .nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.02));
+        border-radius: 999px;
+        box-shadow: var(--shadow);
+      }
+      .nav .left {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .logo {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        font-weight: 820;
+        letter-spacing: 0.2px;
+      }
+      .navlinks {
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .navlinks a {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .navlinks a:hover {
+        filter: brightness(1.06);
+      }
+      .card {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.02));
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .pad {
+        padding: 18px;
+      }
+      header.hero {
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 14px;
+        margin-top: 14px;
+        align-items: stretch;
+      }
+      @media (max-width: 900px) {
+        header.hero {
+          grid-template-columns: 1fr;
+        }
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(26px, 3vw, 40px);
+        letter-spacing: 0.2px;
+      }
+      .sub {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .pillrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .pill {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--panel2);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .pill strong {
+        font-weight: 700;
+        color: var(--text);
+      }
+      button {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: var(--panel2);
+        color: var(--text);
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 700;
+      }
+      button.primary {
+        border: none;
+        background: linear-gradient(90deg, rgba(102, 227, 196, 0.95), rgba(116, 167, 255, 0.95));
+        color: rgba(0, 0, 0, 0.82);
+      }
+      button:hover:not(:disabled) {
+        filter: brightness(1.06);
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .art {
+        height: 100%;
+        display: grid;
+        gap: 10px;
+        padding: 10px;
+      }
+      .art img {
+        width: 100%;
+        height: 132px;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: 0.2px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .notice {
+        border-left: 3px solid rgba(255, 207, 90, 0.85);
+        padding-left: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .notice b {
+        color: var(--text);
+      }
+      .steps {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .step {
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius2);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      }
+      .stephead {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .stephead .k {
+        font-weight: 800;
+      }
+      .stephead .hint {
+        color: var(--muted2);
+        font-size: 13px;
+      }
+      .choices {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      @media (min-width: 760px) {
+        .choices.cols2 {
+          grid-template-columns: 1fr 1fr;
+        }
+        .choices.cols3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .choice {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 10px;
+        align-items: start;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        cursor: pointer;
+      }
+      .choice:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .choice input {
+        margin-top: 3px;
+      }
+      .choice .t {
+        font-weight: 780;
+      }
+      .choice .d {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      .bar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .tag b {
+        color: var(--text);
+        font-weight: 750;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+      @media (max-width: 980px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      .result {
+        display: grid;
+        gap: 12px;
+      }
+      .plan {
+        border: 1px solid var(--border);
+        border-radius: var(--radius2);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+      .plan .top {
+        padding: 14px 14px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: grid;
+        gap: 6px;
+      }
+      .plan .name {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: baseline;
+      }
+      .plan h3 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: 0.15px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        border: 1px solid var(--border);
+      }
+      .b-ok {
+        color: rgba(0, 0, 0, 0.82);
+        background: rgba(128, 237, 153, 0.85);
+        border: none;
+      }
+      .b-warn {
+        color: rgba(0, 0, 0, 0.82);
+        background: rgba(255, 207, 90, 0.9);
+        border: none;
+      }
+      .plan .meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .plan .body {
+        padding: 12px 14px 14px;
+        display: grid;
+        gap: 10px;
+      }
+      ul.clean {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .hr {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 10px 0;
+      }
+      .footer {
+        margin-top: 14px;
+        padding: 16px 18px;
+        color: var(--muted2);
+        font-size: 12px;
+      }
+      .copyline {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .copyline input {
+        flex: 1 1 320px;
+        min-width: 220px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav" aria-label="站点导航">
+        <div class="left">
+          <a class="logo" href="index.html">引导式攻略</a>
+          <div class="navlinks">
+            <a href="wugongshan-guide.html">武功山</a>
+            <a href="xuancheng-guide.html">宣城·泾县</a>
+            <a href="ningde-xiapu-guide.html">宁德·霞浦</a>
+            <a href="taizhou-linhai-guide.html">台州·临海</a>
+          </div>
+        </div>
+        <div class="navlinks">
+          <a href="#wizard">做选择</a>
+          <a href="#food">小吃清单</a>
+        </div>
+      </nav>
+
+      <header class="hero">
+        <section class="card pad">
+          <h1>浙江台州·临海攻略：选择器（府城墙 + 紫阳古街）</h1>
+          <p class="sub">
+            这是一座“走路不累但很有内容”的小城：台州府城墙（江南长城）坡度平缓，紫阳古街糯叽叽小吃密度高。按「天数/玩法/体力」生成最顺的逛吃路线。
+          </p>
+          <div class="pillrow">
+            <span class="pill"><strong>车程</strong>上海虹桥→临海约 2.5h</span>
+            <span class="pill"><strong>核心</strong>台州府城墙</span>
+            <span class="pill"><strong>核心</strong>紫阳古街</span>
+            <span class="pill"><strong>强度</strong>低（适合慢逛）</span>
+          </div>
+          <div class="bar">
+            <button class="primary" id="btnStart">开始选择我的方案</button>
+            <button id="btnReset">重置</button>
+          </div>
+        </section>
+        <section class="card">
+          <div class="art" aria-label="临海风景图">
+            <img loading="lazy" alt="紫阳古街" src="https://commons.wikimedia.org/wiki/Special:FilePath/%E7%B4%AB%E9%98%B3%E5%8F%A4%E8%A1%97.JPG" />
+            <img loading="lazy" alt="临海东湖" src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20East%20Lake%20in%20Linhai%2001%202017-01.jpg" />
+            <img loading="lazy" alt="临海" src="https://commons.wikimedia.org/wiki/Special:FilePath/Linhai%20Zhejiang.jpg" onerror="this.style.display='none'" />
+          </div>
+        </section>
+      </header>
+
+      <section class="card pad" id="wizard" style="margin-top: 14px">
+        <h2>引导选择</h2>
+        <div class="notice">
+          <b>核心体验：</b>白天走城墙与府城内景点，傍晚/夜里把时间交给紫阳古街（小吃+夜氛围）。如果你只想轻松，临海也能玩得很满。
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="stephead">
+              <div class="k">1) 你想玩几天？</div>
+              <div class="hint">1天往返也能玩；2天会更松弛</div>
+            </div>
+            <div class="choices cols2" role="radiogroup" aria-label="天数">
+              <label class="choice">
+                <input type="radio" name="days" value="1" />
+                <div>
+                  <div class="t">1天往返（特种兵轻量版）</div>
+                  <div class="d">城墙 + 古街小吃收割一轮</div>
+                </div>
+              </label>
+              <label class="choice">
+                <input type="radio" name="days" value="2" />
+                <div>
+                  <div class="t">2天1夜（推荐）</div>
+                  <div class="d">白天城墙，夜里逛吃；第二天再慢逛补景</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="stephead">
+              <div class="k">2) 玩法偏好</div>
+              <div class="hint">决定时间分配：城墙/古街/两者兼顾</div>
+            </div>
+            <div class="choices cols3" role="radiogroup" aria-label="玩法偏好">
+              <label class="choice">
+                <input type="radio" name="style" value="wall" />
+                <div>
+                  <div class="t">城墙为主</div>
+                  <div class="d">江南长城走到爽，再去古街补一顿</div>
+                </div>
+              </label>
+              <label class="choice">
+                <input type="radio" name="style" value="food" />
+                <div>
+                  <div class="t">古街吃为主</div>
+                  <div class="d">慢逛紫阳街，小吃从白吃到黑</div>
+                </div>
+              </label>
+              <label class="choice">
+                <input type="radio" name="style" value="mix" />
+                <div>
+                  <div class="t">都要（均衡）</div>
+                  <div class="d">城墙 + 东湖 + 古街，一天两种氛围</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="stephead">
+              <div class="k">3) 体力与膝盖</div>
+              <div class="hint">决定城墙行走段落的长度</div>
+            </div>
+            <div class="choices cols2" role="radiogroup" aria-label="体力">
+              <label class="choice">
+                <input type="radio" name="effort" value="easy" />
+                <div>
+                  <div class="t">完全不费劲</div>
+                  <div class="d">城墙走“精华短段”，其余留给古街</div>
+                </div>
+              </label>
+              <label class="choice">
+                <input type="radio" name="effort" value="more" />
+                <div>
+                  <div class="t">愿意多走一点</div>
+                  <div class="d">城墙走更长段，视野更开阔</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="bar">
+            <span class="tag"><b>你的选择</b><span id="chip">未完成</span></span>
+            <span class="muted" style="font-size: 13px" id="miniTip"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid2">
+        <section class="card pad">
+          <h2>你的专属方案</h2>
+          <div class="muted" style="font-size: 13px; margin-top: -4px">选择完成后自动生成；支持复制分享链接。</div>
+          <div class="hr"></div>
+          <div class="result" id="result"></div>
+          <div class="copyline">
+            <input id="shareUrl" readonly value="" aria-label="分享链接" />
+            <button id="btnCopy" disabled>复制链接</button>
+          </div>
+          <div class="muted" style="font-size: 12px" id="copyHint"></div>
+        </section>
+        <section class="card pad" id="food">
+          <h2>紫阳古街：糯叽叽小吃清单</h2>
+          <div class="muted" style="font-size: 13px; margin-top: -4px">你提到的三样建议直接列为“必吃三件套”。</div>
+          <div class="hr"></div>
+          <ul class="clean">
+            <li>海苔饼</li>
+            <li>蛋清羊尾</li>
+            <li>乌饭麻糍</li>
+          </ul>
+          <div class="hr"></div>
+          <div class="notice">
+            <b>吃法建议：</b>把“主食/甜口/咸口”穿插着吃；别一口气连续吃糯米类，容易腻。
+          </div>
+        </section>
+      </section>
+
+      <section class="card footer">
+        图片来源：Wikimedia Commons（页面使用 Special:FilePath 外链）。临海玩法的关键是“节奏”：白天走城墙，傍晚古街吃逛，整体不累但体验很满。
+      </section>
+    </div>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+      const PLANS = [
+        {
+          id: "L1",
+          name: "1天往返｜均衡版（城墙精华短段 + 紫阳古街晚餐）",
+          badge: "推荐",
+          badgeClass: "b-ok",
+          when: { days: ["1"], style: ["mix", "wall", "food"], effort: ["easy", "more"] },
+          meta: { duration: "1天", intensity: "低→中", base: "不住宿；高铁往返 + 市区打车" },
+          route: "府城墙（精华段）→ 东湖/府城内慢走 → 紫阳古街（晚餐）→ 返程",
+          schedule: [
+            "上午：到临海后直奔府城墙，走精华短段（不费劲也有视野）",
+            "中午：城内简餐/休息",
+            "下午：东湖或府城内慢逛（节奏放慢）",
+            "傍晚：紫阳古街集中吃小吃 → 晚上返程"
+          ],
+          notes: ["一日往返最怕‘赶’：别把城墙走太长，把力气留给晚上的古街体验"],
+          pack: ["舒适鞋", "充电宝", "薄外套（夜里可能起风）"]
+        },
+        {
+          id: "L2",
+          name: "2天1夜｜均衡版（城墙白天走 + 古街夜里逛）",
+          badge: "松弛",
+          badgeClass: "b-ok",
+          when: { days: ["2"], style: ["mix"], effort: ["easy", "more"] },
+          meta: { duration: "2天1夜", intensity: "低", base: "建议住府城周边（晚上逛吃更方便）" },
+          route: "Day1 城墙+夜古街；Day2 慢逛补景",
+          schedule: [
+            "Day 1：到达 → 府城墙（建议下午光线更柔和）→ 晚上紫阳古街吃逛",
+            "Day 2：东湖/府城内慢走 → 下午返程"
+          ],
+          notes: ["两天的价值是‘不赶路’：你会更愿意停下来感受街巷氛围"],
+          pack: ["舒适鞋", "充电宝", "雨具（看天气）"]
+        },
+        {
+          id: "L3",
+          name: "2天1夜｜古街吃为主（把时间交给糯叽叽）",
+          badge: "吃货",
+          badgeClass: "b-ok",
+          when: { days: ["2"], style: ["food"], effort: ["easy", "more"] },
+          meta: { duration: "2天1夜", intensity: "低", base: "建议住紫阳古街附近（反复逛吃更爽）" },
+          route: "紫阳古街为核心，城墙走短段点到为止",
+          schedule: [
+            "Day 1：到达 → 下午古街慢逛 → 夜宵继续吃",
+            "Day 2：城墙精华短段（轻走）→ 再补一轮小吃 → 返程"
+          ],
+          notes: ["糯米类小吃建议分散着吃，穿插咸口与喝水"],
+          pack: ["舒适鞋", "充电宝"]
+        },
+        {
+          id: "L4",
+          name: "2天1夜｜城墙为主（愿意多走一点）",
+          badge: "走路",
+          badgeClass: "b-warn",
+          when: { days: ["2"], style: ["wall"], effort: ["more"] },
+          meta: { duration: "2天1夜", intensity: "中", base: "建议住府城周边" },
+          route: "城墙更长段 + 府城内补景 + 古街收尾",
+          schedule: [
+            "Day 1：到达 → 府城墙走更长段（分段休息）→ 晚上紫阳古街吃逛",
+            "Day 2：东湖/府城内补景 → 返程"
+          ],
+          notes: ["走长段要控制节奏：别一口气拉满，留力给晚上逛吃"],
+          pack: ["舒适鞋", "水与补给", "充电宝"]
+        }
+      ];
+
+      const state = { days: null, style: null, effort: null };
+
+      function readStateFromUI() {
+        const get = (name) => (document.querySelector(`input[name="${name}"]:checked`) || {}).value || null;
+        state.days = get("days");
+        state.style = get("style");
+        state.effort = get("effort");
+      }
+
+      function applyQueryToUI() {
+        const p = new URLSearchParams(location.search);
+        const set = (name) => {
+          const v = p.get(name);
+          if (!v) return;
+          const el = document.querySelector(`input[name="${name}"][value="${v}"]`);
+          if (el) el.checked = true;
+        };
+        set("days");
+        set("style");
+        set("effort");
+      }
+
+      function encodeQuery() {
+        const p = new URLSearchParams();
+        if (state.days) p.set("days", state.days);
+        if (state.style) p.set("style", state.style);
+        if (state.effort) p.set("effort", state.effort);
+        const q = p.toString();
+        const base = location.href.split("?")[0].split("#")[0];
+        return q ? `${base}?${q}` : base;
+      }
+
+      function chipText() {
+        const parts = [];
+        if (state.days) parts.push(state.days === "1" ? "1天" : "2天");
+        if (state.style) parts.push({ wall: "城墙为主", food: "古街吃为主", mix: "均衡" }[state.style]);
+        if (state.effort) parts.push(state.effort === "easy" ? "不费劲" : "多走点");
+        return parts.length ? parts.join(" · ") : "未完成";
+      }
+
+      function miniTip() {
+        if (!state.days || !state.style || !state.effort) return "完成三项选择后生成方案。";
+        if (state.days === "1" && state.style === "wall" && state.effort === "more") return "一日往返走太长容易赶：建议城墙走精华短段，晚上把时间留给古街。";
+        return "已完成选择，可复制链接分享。";
+      }
+
+      function matches(plan) {
+        const w = plan.when;
+        return w.days.includes(state.days) && w.style.includes(state.style) && w.effort.includes(state.effort);
+      }
+
+      function pickPlans() {
+        if (!state.days || !state.style || !state.effort) return [];
+        const ok = PLANS.filter((p) => matches(p));
+        if (ok.length) return ok.slice(0, 1);
+        const fallback = PLANS.filter((p) => p.when.days.includes(state.days));
+        return fallback.slice(0, 1);
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function renderPlan(p) {
+        const sched = p.schedule.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+        const notes = p.notes.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+        const pack = p.pack.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+
+        return `
+          <article class="plan">
+            <div class="top">
+              <div class="name">
+                <h3>方案 ${p.id}｜${escapeHtml(p.name)}</h3>
+                <span class="badge ${p.badgeClass}">${escapeHtml(p.badge)}</span>
+              </div>
+              <div class="meta">
+                <span>时长：${escapeHtml(p.meta.duration)}</span>
+                <span>强度：${escapeHtml(p.meta.intensity)}</span>
+                <span>住宿：${escapeHtml(p.meta.base)}</span>
+              </div>
+              <div class="meta"><span>线路：${escapeHtml(p.route)}</span></div>
+            </div>
+            <div class="body">
+              <div class="muted" style="font-weight: 750; color: var(--text)">行程节奏</div>
+              <ul class="clean">${sched}</ul>
+              <div class="hr"></div>
+              <div class="muted" style="font-weight: 750; color: var(--text)">关键提醒</div>
+              <ul class="clean">${notes}</ul>
+              <div class="hr"></div>
+              <div class="muted" style="font-weight: 750; color: var(--text)">随身清单</div>
+              <ul class="clean">${pack}</ul>
+            </div>
+          </article>
+        `;
+      }
+
+      function fallbackText() {
+        return "<div class='muted'>还差一步：完成三项选择，就会出现推荐方案。</div>";
+      }
+
+      function copyShare() {
+        const input = $("#shareUrl");
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        const text = input.value;
+        const done = () => {
+          $("#copyHint").textContent = "已复制，可直接发给同伴打开。";
+          setTimeout(() => ($("#copyHint").textContent = ""), 2200);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+        } else {
+          fallbackCopy(text, done);
+        }
+      }
+
+      function fallbackCopy(text, done) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        ta.style.top = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          done();
+        } catch {
+          $("#copyHint").textContent = "复制失败：请手动选中链接复制。";
+        } finally {
+          ta.remove();
+        }
+      }
+
+      function render() {
+        readStateFromUI();
+        $("#chip").textContent = chipText();
+        $("#miniTip").textContent = miniTip();
+
+        const plans = pickPlans();
+        const r = $("#result");
+        if (!plans.length) {
+          r.innerHTML = fallbackText();
+          $("#btnCopy").disabled = true;
+          $("#shareUrl").value = encodeQuery();
+          history.replaceState(null, "", $("#shareUrl").value);
+          return;
+        }
+        r.innerHTML = plans.map(renderPlan).join("");
+        $("#btnCopy").disabled = false;
+        $("#shareUrl").value = encodeQuery();
+        history.replaceState(null, "", $("#shareUrl").value);
+      }
+
+      function resetAll() {
+        $$("input[type=radio]").forEach((el) => (el.checked = false));
+        history.replaceState(null, "", location.href.split("?")[0].split("#")[0]);
+        render();
+      }
+
+      function wire() {
+        $$("input[type=radio]").forEach((el) => el.addEventListener("change", render));
+        $("#btnReset").addEventListener("click", resetAll);
+        $("#btnStart").addEventListener("click", () => $("#wizard").scrollIntoView({ behavior: "smooth", block: "start" }));
+        $("#btnCopy").addEventListener("click", copyShare);
+      }
+
+      applyQueryToUI();
+      wire();
+      render();
+    </script>
+  </body>
+</html>
+

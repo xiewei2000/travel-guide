@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>武功山端午徒步攻略｜引导式路线选择器（正穿/反穿/夜爬）</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.1);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.72);
+        --muted2: rgba(255, 255, 255, 0.6);
+        --brand: #66e3c4;
+        --brand2: #74a7ff;
+        --warn: #ffcf5a;
+        --danger: #ff6b6b;
+        --ok: #80ed99;
+        --border: rgba(255, 255, 255, 0.16);
+        --shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+        --radius: 18px;
+        --radius2: 12px;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f7fafc;
+          --panel: rgba(0, 0, 0, 0.04);
+          --panel2: rgba(0, 0, 0, 0.06);
+          --text: rgba(0, 0, 0, 0.88);
+          --muted: rgba(0, 0, 0, 0.68);
+          --muted2: rgba(0, 0, 0, 0.55);
+          --border: rgba(0, 0, 0, 0.12);
+          --shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1100px 520px at 30% -10%, rgba(102, 227, 196, 0.25), transparent 60%),
+          radial-gradient(900px 520px at 90% 10%, rgba(116, 167, 255, 0.25), transparent 62%),
+          radial-gradient(900px 560px at 50% 120%, rgba(255, 207, 90, 0.15), transparent 60%),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.02));
+        border-radius: 999px;
+        box-shadow: var(--shadow);
+      }
+      .nav .left {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .logo {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        font-weight: 820;
+        letter-spacing: 0.2px;
+      }
+      .navlinks {
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .navlinks a {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .navlinks a:hover {
+        filter: brightness(1.06);
+      }
+      .container {
+        width: min(1080px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 28px 0 72px;
+      }
+      header.hero {
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 18px;
+        align-items: stretch;
+        margin-top: 6px;
+      }
+      @media (max-width: 900px) {
+        header.hero {
+          grid-template-columns: 1fr;
+        }
+      }
+      .card {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.02));
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .card.pad {
+        padding: 18px;
+      }
+      .hero-title {
+        font-size: clamp(26px, 3vw, 40px);
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+      .hero-sub {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .pillrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .pill {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--panel2);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .pill strong {
+        font-weight: 650;
+        color: var(--text);
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      button {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: var(--panel2);
+        color: var(--text);
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 650;
+      }
+      button.primary {
+        border: none;
+        background: linear-gradient(90deg, rgba(102, 227, 196, 0.95), rgba(116, 167, 255, 0.95));
+        color: rgba(0, 0, 0, 0.82);
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      button:hover:not(:disabled) {
+        filter: brightness(1.06);
+      }
+      .hero-art {
+        position: relative;
+        min-height: 250px;
+      }
+      .art-wrap {
+        height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 10px;
+      }
+      .art-wrap svg {
+        width: 100%;
+        max-width: 460px;
+        height: auto;
+      }
+      main {
+        margin-top: 20px;
+        display: grid;
+        gap: 14px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      @media (max-width: 980px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: 0.2px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .steps {
+        display: grid;
+        gap: 12px;
+      }
+      .step {
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius2);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      }
+      .stephead {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .stephead .k {
+        font-weight: 750;
+      }
+      .stephead .hint {
+        color: var(--muted2);
+        font-size: 13px;
+      }
+      .choices {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      @media (min-width: 760px) {
+        .choices.cols2 {
+          grid-template-columns: 1fr 1fr;
+        }
+        .choices.cols3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .choice {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 10px;
+        align-items: start;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        cursor: pointer;
+      }
+      .choice:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .choice input {
+        margin-top: 3px;
+      }
+      .choice .t {
+        font-weight: 720;
+      }
+      .choice .d {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      .bar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .mini {
+        font-size: 12px;
+        color: var(--muted2);
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .tag b {
+        color: var(--text);
+        font-weight: 750;
+      }
+      .result {
+        display: grid;
+        gap: 12px;
+      }
+      .plan {
+        border: 1px solid var(--border);
+        border-radius: var(--radius2);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+      .plan .top {
+        padding: 14px 14px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: grid;
+        gap: 6px;
+      }
+      .plan .name {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: baseline;
+      }
+      .plan .name h3 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: 0.15px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 750;
+        border: 1px solid var(--border);
+      }
+      .b-ok {
+        color: rgba(0, 0, 0, 0.82);
+        background: rgba(128, 237, 153, 0.85);
+        border: none;
+      }
+      .b-warn {
+        color: rgba(0, 0, 0, 0.82);
+        background: rgba(255, 207, 90, 0.9);
+        border: none;
+      }
+      .b-risk {
+        color: rgba(0, 0, 0, 0.82);
+        background: rgba(255, 107, 107, 0.9);
+        border: none;
+      }
+      .plan .meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .plan .body {
+        padding: 12px 14px 14px;
+        display: grid;
+        gap: 10px;
+      }
+      .kvs {
+        display: grid;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .kvs b {
+        color: var(--text);
+      }
+      .cols {
+        display: grid;
+        gap: 12px;
+      }
+      @media (min-width: 860px) {
+        .cols.cols2 {
+          grid-template-columns: 1.2fr 0.8fr;
+        }
+      }
+      ul.clean {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .hr {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 10px 0;
+      }
+      .copyline {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .copyline input {
+        flex: 1 1 320px;
+        min-width: 220px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+      .map {
+        padding: 0;
+      }
+      .maphead {
+        padding: 16px 18px 0;
+      }
+      .mapwrap {
+        padding: 8px 8px 14px;
+      }
+      .mapwrap svg {
+        width: 100%;
+        height: auto;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .checklist {
+        display: grid;
+        gap: 10px;
+      }
+      .checkgrid {
+        display: grid;
+        gap: 10px;
+      }
+      @media (min-width: 900px) {
+        .checkgrid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .checkcard {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 12px 12px 10px;
+      }
+      .checkcard h4 {
+        margin: 0 0 6px;
+        font-size: 14px;
+        letter-spacing: 0.15px;
+      }
+      .ck {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .ck input {
+        width: 16px;
+        height: 16px;
+      }
+      .footer {
+        margin-top: 20px;
+        padding: 16px 18px;
+        color: var(--muted2);
+        font-size: 12px;
+      }
+      .notice {
+        border-left: 3px solid rgba(255, 207, 90, 0.85);
+        padding-left: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .notice b {
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="nav" aria-label="站点导航">
+        <div class="left">
+          <a class="logo" href="index.html">引导式攻略</a>
+          <div class="navlinks">
+            <a href="wugongshan-guide.html">武功山</a>
+            <a href="xuancheng-guide.html">宣城·泾县</a>
+            <a href="ningde-xiapu-guide.html">宁德·霞浦</a>
+            <a href="taizhou-linhai-guide.html">台州·临海</a>
+          </div>
+        </div>
+        <div class="navlinks">
+          <a href="#wizard">做选择</a>
+          <a href="#resultCard">看结果</a>
+        </div>
+      </nav>
+      <header class="hero">
+        <section class="card pad">
+          <h1 class="hero-title">武功山端午徒步攻略：路线选择器</h1>
+          <p class="hero-sub">
+            按“住不住山上 / 正穿还是反穿 / 要不要夜爬 / 体力水平”四个选择，自动生成适合你的行程方案（含交通、分段节奏、金顶营地推荐、夜爬安全要点与装备清单）。
+          </p>
+
+          <div class="pillrow">
+            <span class="pill"><strong>季节</strong>6月中旬·雨季多雾</span>
+            <span class="pill"><strong>核心精华</strong>吊马桩 ↔ 金顶草甸</span>
+            <span class="pill"><strong>强提醒</strong>早晚温差大 + 山顶风大</span>
+            <span class="pill"><strong>夜爬</strong>猴谷前有灯，后半程无灯</span>
+          </div>
+
+          <div class="hero-actions">
+            <button class="primary" id="btnStart">开始选择我的方案</button>
+            <button id="btnReset" title="清空选择">重置</button>
+            <button id="btnPrint" title="打印或保存为PDF">打印/保存PDF</button>
+          </div>
+        </section>
+
+        <section class="card hero-art">
+          <div class="art-wrap" aria-hidden="true">
+            <svg viewBox="0 0 720 420" role="img">
+              <defs>
+                <linearGradient id="gSky" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(116,167,255,0.85)" />
+                  <stop offset="55%" stop-color="rgba(102,227,196,0.55)" />
+                  <stop offset="100%" stop-color="rgba(255,207,90,0.25)" />
+                </linearGradient>
+                <linearGradient id="gMeadow" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(128,237,153,0.75)" />
+                  <stop offset="100%" stop-color="rgba(102,227,196,0.18)" />
+                </linearGradient>
+                <linearGradient id="gRidge" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stop-color="rgba(255,255,255,0.65)" />
+                  <stop offset="100%" stop-color="rgba(255,255,255,0.1)" />
+                </linearGradient>
+                <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" />
+                </filter>
+              </defs>
+              <rect x="0" y="0" width="720" height="420" rx="20" fill="url(#gSky)" />
+              <g opacity="0.22" filter="url(#soft)">
+                <circle cx="120" cy="90" r="55" fill="white" />
+                <circle cx="175" cy="90" r="45" fill="white" />
+                <circle cx="150" cy="60" r="35" fill="white" />
+                <circle cx="610" cy="92" r="58" fill="white" />
+                <circle cx="560" cy="96" r="42" fill="white" />
+                <circle cx="595" cy="62" r="30" fill="white" />
+              </g>
+              <path
+                d="M-20,330 C90,280 130,250 220,260 C290,268 330,220 400,210 C480,198 520,240 590,230 C645,222 690,205 760,180 L760,440 L-20,440 Z"
+                fill="url(#gMeadow)"
+              />
+              <path
+                d="M40,320 C110,265 155,235 215,245 C275,255 315,220 370,205 C430,188 462,222 515,214 C580,205 635,180 700,145"
+                fill="none"
+                stroke="url(#gRidge)"
+                stroke-width="6"
+                stroke-linecap="round"
+              />
+              <g>
+                <circle cx="690" cy="145" r="9" fill="rgba(255,255,255,0.85)" />
+                <text x="690" y="130" text-anchor="end" font-size="16" font-weight="700" fill="rgba(0,0,0,0.72)">
+                  金顶 1918.3
+                </text>
+                <circle cx="515" cy="214" r="7" fill="rgba(255,255,255,0.75)" />
+                <text x="525" y="218" font-size="14" font-weight="650" fill="rgba(0,0,0,0.65)">吊马桩</text>
+                <circle cx="215" cy="245" r="7" fill="rgba(255,255,255,0.75)" />
+                <text x="200" y="270" font-size="14" font-weight="650" fill="rgba(0,0,0,0.65)">发云界</text>
+                <circle cx="95" cy="295" r="7" fill="rgba(255,255,255,0.75)" />
+                <text x="95" y="318" font-size="14" font-weight="650" fill="rgba(0,0,0,0.65)">龙山村</text>
+              </g>
+            </svg>
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section class="card pad" id="wizard">
+          <h2>引导选择</h2>
+          <div class="notice">
+            <b>端午默认前提：</b>雨季多雾 + 早晚温差大。无论选哪条线，都把<strong>冲锋衣/雨具</strong>与<strong>保暖层</strong>放在第一优先级。
+          </div>
+
+          <div class="steps" style="margin-top: 12px">
+            <div class="step" id="step-over">
+              <div class="stephead">
+                <div class="k">1) 住不住山上？</div>
+                <div class="hint">影响你是否能轻松看日出/星空，以及行程强度</div>
+              </div>
+              <div class="choices cols2" role="radiogroup" aria-label="是否住山上">
+                <label class="choice">
+                  <input type="radio" name="overnight" value="on" />
+                  <div>
+                    <div class="t">住 1 晚（客栈/帐篷）</div>
+                    <div class="d">更稳妥看日出日落；端午床位紧张，建议提前订</div>
+                  </div>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="overnight" value="off" />
+                  <div>
+                    <div class="t">不住（当日往返）</div>
+                    <div class="d">更省预算但更累；需要更早出发或选择索道</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="step" id="step-dir">
+              <div class="stephead">
+                <div class="k">2) 正穿/反穿/景区线？</div>
+                <div class="hint">反穿更友好；正穿更野更硬核；景区线适合夜爬/轻装</div>
+              </div>
+              <div class="choices cols3" role="radiogroup" aria-label="路线方向">
+                <label class="choice">
+                  <input type="radio" name="direction" value="reverse" />
+                  <div>
+                    <div class="t">反穿（龙山村 → 金顶）</div>
+                    <div class="d">先进入草甸精华，爬升更平缓，新手首选</div>
+                  </div>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="direction" value="forward" />
+                  <div>
+                    <div class="t">正穿（沈子村 → 金顶）</div>
+                    <div class="d">前半段更苦更野，到铁蹄峰后视野打开</div>
+                  </div>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="direction" value="scenic" />
+                  <div>
+                    <div class="t">景区线（石鼓寺线）</div>
+                    <div class="d">夜爬经典线；白天也可索道/徒步组合</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="step" id="step-night">
+              <div class="stephead">
+                <div class="k">3) 要不要夜爬？</div>
+                <div class="hint">夜爬只建议 5-10 月；端午可行但要头灯+备电</div>
+              </div>
+              <div class="choices cols2" role="radiogroup" aria-label="是否夜爬">
+                <label class="choice">
+                  <input type="radio" name="night" value="yes" />
+                  <div>
+                    <div class="t">要夜爬（通宵上山等日出）</div>
+                    <div class="d">22:00–24:00 出发更常见；好汉坡后无路灯</div>
+                  </div>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="night" value="no" />
+                  <div>
+                    <div class="t">不夜爬（白天/凌晨轻装）</div>
+                    <div class="d">更稳更安全；想看日出可选择住金顶或早起短走</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="step" id="step-fit">
+              <div class="stephead">
+                <div class="k">4) 你的体力水平？</div>
+                <div class="hint">用于推荐“1天强度 / 2天经典 / 3天完整”</div>
+              </div>
+              <div class="choices cols3" role="radiogroup" aria-label="体力水平">
+                <label class="choice">
+                  <input type="radio" name="fitness" value="new" />
+                  <div>
+                    <div class="t">新手/休闲</div>
+                    <div class="d">更适合 2天1夜 或 索道组合</div>
+                  </div>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="fitness" value="mid" />
+                  <div>
+                    <div class="t">中等体力</div>
+                    <div class="d">可选 2天1夜 或 夜爬+下撤</div>
+                  </div>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="fitness" value="strong" />
+                  <div>
+                    <div class="t">强（耐力很好）</div>
+                    <div class="d">可挑战 1天长线 或 3天完整穿越</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="bar">
+              <span class="tag"><b>你的选择</b><span id="chipState">未完成</span></span>
+              <span class="mini" id="miniTip"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid2">
+          <section class="card map" aria-label="武功山示意地图">
+            <div class="maphead">
+              <h2>示意地图（可替换为你自己的原图）</h2>
+              <div class="muted" style="font-size: 13px">
+                本图为简化示意：用于理解“景区线/反穿/正穿”与金顶关键节点。你也可以把你那张“武功山地图参考”图片替换进来（见下方提示）。
+              </div>
+            </div>
+            <div class="mapwrap">
+              <svg viewBox="0 0 900 520" role="img" aria-label="武功山路线示意">
+                <defs>
+                  <linearGradient id="mBg" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(116,167,255,0.18)" />
+                    <stop offset="100%" stop-color="rgba(102,227,196,0.06)" />
+                  </linearGradient>
+                  <style>
+                    .node { fill: rgba(255,255,255,0.85); stroke: rgba(0,0,0,0.18); stroke-width: 1; }
+                    .label { font: 650 14px system-ui, -apple-system, "Segoe UI", sans-serif; fill: rgba(0,0,0,0.72); }
+                    .minor { font: 600 12px system-ui, -apple-system, "Segoe UI", sans-serif; fill: rgba(0,0,0,0.58); }
+                    .r1 { fill: none; stroke: rgba(102,227,196,0.95); stroke-width: 6; stroke-linecap: round; }
+                    .r2 { fill: none; stroke: rgba(116,167,255,0.95); stroke-width: 6; stroke-linecap: round; }
+                    .r3 { fill: none; stroke: rgba(255,207,90,0.95); stroke-width: 6; stroke-linecap: round; }
+                    .r4 { fill: none; stroke: rgba(255,107,107,0.9); stroke-width: 6; stroke-linecap: round; }
+                    .dash { stroke-dasharray: 10 10; }
+                  </style>
+                </defs>
+                <rect x="0" y="0" width="900" height="520" rx="18" fill="url(#mBg)" />
+
+                <path class="r1" d="M120,420 C180,360 220,325 280,305 C350,282 390,252 445,230 C510,204 565,215 630,190 C710,160 770,120 820,90" />
+                <path class="r4" d="M160,458 C230,430 270,402 320,360 C370,316 412,290 470,270 C540,246 610,252 670,220 C740,184 780,132 820,90" />
+                <path class="r2" d="M90,120 C160,160 220,195 270,220 C330,248 380,270 440,300 C510,335 560,350 640,360 C730,372 790,390 850,420" />
+                <path class="r3 dash" d="M540,420 C570,360 590,330 615,300 C640,268 660,240 690,210 C730,170 770,128 820,90" />
+
+                <circle class="node" cx="120" cy="420" r="10" />
+                <text class="label" x="120" y="445" text-anchor="middle">龙山村</text>
+                <text class="minor" x="120" y="462" text-anchor="middle">反穿起点</text>
+
+                <circle class="node" cx="280" cy="305" r="9" />
+                <text class="label" x="280" y="330" text-anchor="middle">发云界</text>
+
+                <circle class="node" cx="445" cy="230" r="9" />
+                <text class="label" x="445" y="255" text-anchor="middle">绝望坡</text>
+                <text class="minor" x="445" y="272" text-anchor="middle">经典住宿区</text>
+
+                <circle class="node" cx="630" cy="190" r="9" />
+                <text class="label" x="630" y="215" text-anchor="middle">吊马桩</text>
+                <text class="minor" x="630" y="232" text-anchor="middle">草甸精华段</text>
+
+                <circle class="node" cx="820" cy="90" r="11" />
+                <text class="label" x="820" y="66" text-anchor="end">金顶 1918.3</text>
+                <text class="minor" x="820" y="50" text-anchor="end">主峰/日出</text>
+
+                <circle class="node" cx="90" cy="120" r="10" />
+                <text class="label" x="90" y="96" text-anchor="start">沈子村</text>
+                <text class="minor" x="90" y="80" text-anchor="start">正穿起点</text>
+
+                <circle class="node" cx="440" cy="300" r="9" />
+                <text class="label" x="440" y="326" text-anchor="middle">铁蹄峰</text>
+
+                <circle class="node" cx="850" cy="420" r="10" />
+                <text class="label" x="850" y="446" text-anchor="end">石鼓寺</text>
+                <text class="minor" x="850" y="462" text-anchor="end">夜爬入口</text>
+
+                <circle class="node" cx="690" cy="210" r="9" />
+                <text class="label" x="690" y="236" text-anchor="middle">好汉坡</text>
+                <text class="minor" x="690" y="253" text-anchor="middle">夜爬虐点</text>
+
+                <circle class="node" cx="615" cy="300" r="8" />
+                <text class="label" x="615" y="326" text-anchor="middle">猴谷</text>
+                <text class="minor" x="615" y="343" text-anchor="middle">部分有灯</text>
+              </svg>
+            </div>
+          </section>
+
+          <section class="card pad" id="resultCard" aria-label="推荐结果">
+            <h2>你的专属方案</h2>
+            <div class="muted" style="font-size: 13px; margin-top: -4px">
+              选择完成后会自动生成。结果支持“复制分享链接”，同伴点开即可看到同样的方案。
+            </div>
+            <div class="hr"></div>
+            <div class="result" id="result"></div>
+            <div class="hr"></div>
+            <div class="copyline">
+              <input id="shareUrl" readonly value="" aria-label="分享链接" />
+              <button id="btnCopy" disabled>复制链接</button>
+            </div>
+            <div class="mini" id="copyHint"></div>
+          </section>
+        </section>
+
+        <section class="card pad">
+          <h2>金顶营地怎么选（离金顶由近到远）</h2>
+          <div class="muted" style="font-size: 13px; margin-top: -4px">按“方便/安静/夜爬落脚/性价比”选，不要只看价格。</div>
+          <div class="hr"></div>
+          <div class="kvs">
+            <div><b>白鹤峰</b>：离金顶约 5 分钟；最方便但节假日较吵、卫浴排队更明显。</div>
+            <div><b>云景楼</b>：离金顶约 10 分钟；环境不错、相对安静。</div>
+            <div><b>金顶南云端站</b>：离金顶约 10–12 分钟；更清静，价格相对友好。</div>
+            <div><b>白鹤园</b>：离金顶约 15 分钟；夜爬更好找的第一个落脚点之一。</div>
+            <div><b>山神小卖部</b>：离金顶约 15 分钟；性价比与安静兼顾，适合索道上山。</div>
+            <div><b>金顶户外基地</b>：离金顶约 18 分钟；更避风，适合多人。</div>
+          </div>
+          <div class="hr"></div>
+          <div class="notice">
+            <b>共性：</b>多营地提供卫浴与热水；建议带保温杯。端午床位紧张，优先考虑<strong>离金顶近 + 便于夜间找路</strong>。
+          </div>
+        </section>
+
+        <section class="card pad checklist">
+          <h2>端午装备清单（可勾选）</h2>
+          <div class="muted" style="font-size: 13px; margin-top: -4px">夜爬则把“照明/备电/保暖/防雨”全部升到必带。</div>
+          <div class="checkgrid" style="margin-top: 12px">
+            <div class="checkcard">
+              <h4>衣物（保暖 + 防风雨）</h4>
+              <label class="ck"><input type="checkbox" />冲锋衣/防风外套（优先级最高）</label>
+              <label class="ck"><input type="checkbox" />中层抓绒/保暖内衣</label>
+              <label class="ck"><input type="checkbox" />轻薄羽绒/薄棉服（山顶早晚）</label>
+              <label class="ck"><input type="checkbox" />冲锋裤/防泼水长裤</label>
+              <label class="ck"><input type="checkbox" />帽子 + 手套（夜爬更需要）</label>
+              <label class="ck"><input type="checkbox" />一次性雨衣/雨罩</label>
+            </div>
+            <div class="checkcard">
+              <h4>装备（安全与护膝）</h4>
+              <label class="ck"><input type="checkbox" />头灯/强光手电（夜爬必带）</label>
+              <label class="ck"><input type="checkbox" />备用电池/备份小手电</label>
+              <label class="ck"><input type="checkbox" />登山杖（下坡保护膝盖）</label>
+              <label class="ck"><input type="checkbox" />护膝（长下坡或有旧伤必带）</label>
+              <label class="ck"><input type="checkbox" />充电宝（山顶充电慢且贵）</label>
+              <label class="ck"><input type="checkbox" />垃圾袋（无痕山野）</label>
+            </div>
+            <div class="checkcard">
+              <h4>补给（端午雨季 + 高强度）</h4>
+              <label class="ck"><input type="checkbox" />水 1.5–2L（夜爬建议 2–3L）</label>
+              <label class="ck"><input type="checkbox" />高热量路粮（巧克力/能量棒/牛肉干）</label>
+              <label class="ck"><input type="checkbox" />电解质/盐丸（出汗多时）</label>
+              <label class="ck"><input type="checkbox" />纸巾/湿巾</label>
+            </div>
+            <div class="checkcard">
+              <h4>防晒 & 防蚊（6月刚需）</h4>
+              <label class="ck"><input type="checkbox" />防晒霜（高倍 + 补涂）</label>
+              <label class="ck"><input type="checkbox" />墨镜 + 帽子</label>
+              <label class="ck"><input type="checkbox" />驱蚊液/止痒膏</label>
+              <label class="ck"><input type="checkbox" />创可贴/基础急救包</label>
+            </div>
+          </div>
+        </section>
+
+        <section class="card footer">
+          <div>
+            使用方式：把此文件当做静态网页打开即可（双击打开 / 或拖进浏览器）。若要变成“真正的网址”，把文件上传到任意静态托管平台即可（如 GitHub Pages / Gitee Pages / Netlify / Vercel）。
+          </div>
+          <div style="margin-top: 8px">
+            替换你的“武功山地图参考”原图：在本文件内搜索 <span style="font-family: var(--mono)">示意地图</span>，把那块 SVG 替换成
+            <span style="font-family: var(--mono)">&lt;img src="你的图片URL或本地路径"&gt;</span> 即可。
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+      const PLANS = [
+        {
+          id: "A",
+          name: "反穿 · 2天1夜（经典看日出日落）",
+          kind: "反穿",
+          overnight: true,
+          nightHike: false,
+          fitness: ["new", "mid", "strong"],
+          duration: "2天1夜",
+          intensity: "中等",
+          badge: "推荐",
+          badgeClass: "b-ok",
+          route: "龙山村 → 发云界 → 绝望坡（住） → 观音宕/吊马桩 → 金顶 → 下山",
+          highlights: ["草甸精华前置", "绝望坡日落", "第二天登顶看日出"],
+          keyNotes: [
+            "端午客栈紧张：建议提前订床位（含早晚餐通常更省心）",
+            "绝望坡是连续草甸陡坡：慢上、分段补水",
+            "下山优先索道组合省膝盖；遇雨雾更建议索道"
+          ],
+          schedule: [
+            { day: "Day 1", text: "萍乡北站 → 龙山村（拼车/包车）→ 竹林陡坡上山 → 发云界 → 千丈岩/好汉坡 → 绝望坡附近客栈入住 → 看日落" },
+            { day: "Day 2", text: "客栈附近看日出 → 翻越绝望坡 → 观音宕（星空营地）→ 吊马桩 → 10:30-11:00 抵达金顶 → 索道/徒步下撤" }
+          ],
+          transport: [
+            "进山：萍乡北站 → 龙山村（常见拼车/包车）",
+            "下撤：金顶索道 → 中庵索道 → 景区大巴（省力）；或金顶徒步下到景区口"
+          ],
+          mustGear: ["冲锋衣/雨具", "保暖层", "登山杖/护膝", "驱蚊+防晒"]
+        },
+        {
+          id: "B",
+          name: "反穿 · 1天（当日往返，体力强者）",
+          kind: "反穿",
+          overnight: false,
+          nightHike: false,
+          fitness: ["strong"],
+          duration: "1天",
+          intensity: "高强度",
+          badge: "挑战",
+          badgeClass: "b-warn",
+          route: "龙山村 → 发云界 → 绝望坡 → 吊马桩 → 金顶 → 下山",
+          highlights: ["一天走核心草甸", "效率最高"],
+          keyNotes: [
+            "建议 7:00 前出发，严格控制停留时间",
+            "全程耐力要求高：出现抽筋/膝痛要及时下撤",
+            "遇雨雾：果断改索道下山，避免拖到天黑"
+          ],
+          schedule: [
+            { day: "当日", text: "早出发 → 反穿核心段一路推进 → 16:00-17:00 争取抵达金顶 → 索道/徒步下撤" }
+          ],
+          transport: ["进山：萍乡北站 → 龙山村", "下撤：建议索道组合（更稳）"],
+          mustGear: ["冲锋衣/雨具", "2L 水 + 路粮", "登山杖/护膝", "头灯（预防拖晚）"]
+        },
+        {
+          id: "C",
+          name: "正穿 · 2天1夜（短线：沈子村 → 金顶）",
+          kind: "正穿",
+          overnight: true,
+          nightHike: false,
+          fitness: ["mid", "strong"],
+          duration: "2天1夜",
+          intensity: "偏高",
+          badge: "硬核",
+          badgeClass: "b-warn",
+          route: "沈子村 → 九龙山 → 铁蹄峰 → 金顶（住） → 下山",
+          highlights: ["先苦后甜", "体验山脊与金顶日出"],
+          keyNotes: [
+            "前半段树林与野路多：节奏要稳，避免爆掉",
+            "住金顶：更稳看日出；端午需提前订",
+            "第二天可索道下撤，留体力给风雨应对"
+          ],
+          schedule: [
+            { day: "Day 1", text: "萍乡站/北站 → 沈子村 → 九龙山方向上升 → 铁蹄峰 → 抵达金顶住宿/营地 → 看日落星空" },
+            { day: "Day 2", text: "金顶日出 → 索道/步道下撤；体力足可往吊马桩方向走一小段再返回下撤" }
+          ],
+          transport: ["进山：萍乡站/北站 → 沈子村", "下撤：中庵索道 + 景区交通更稳"],
+          mustGear: ["冲锋衣/雨具", "保暖层", "登山杖", "补给更要充足（路段更野）"]
+        },
+        {
+          id: "D",
+          name: "正穿 · 3天2夜（长线：沈子村 → 金顶 → 发云界）",
+          kind: "正穿",
+          overnight: true,
+          nightHike: false,
+          fitness: ["strong"],
+          duration: "3天2夜",
+          intensity: "高强度",
+          badge: "进阶",
+          badgeClass: "b-risk",
+          route: "沈子村 → 九龙山 → 铁蹄峰 → 金顶（住） → 吊马桩 → 绝望坡 → 发云界（住） → 龙山村下撤",
+          highlights: ["完整山脊穿越", "草甸W型起伏精华段拉满"],
+          keyNotes: [
+            "端午人多 + 雨雾：务必预留机动时间，避免摸黑",
+            "连续起伏耗体力：不建议新手尝试",
+            "提前确认住宿点是否有床位与餐食，携带备用路粮"
+          ],
+          schedule: [
+            { day: "Day 1", text: "沈子村 → 九龙山 → 铁蹄峰 → 金顶/铁蹄峰客栈（住）" },
+            { day: "Day 2", text: "金顶 → 吊马桩 → 绝望坡 → 发云界/观音宕客栈（住）" },
+            { day: "Day 3", text: "发云界 → 千丈岩 → 好汉坡 → 下到龙山村 → 返程" }
+          ],
+          transport: ["起点/终点需要接驳：沈子村进、龙山村出更顺"],
+          mustGear: ["冲锋衣/雨具", "保暖层", "登山杖/护膝", "备用干粮与应急头灯"]
+        },
+        {
+          id: "E",
+          name: "看日出省力版：住金顶（不通宵夜爬）",
+          kind: "景区线",
+          overnight: true,
+          nightHike: false,
+          fitness: ["new", "mid", "strong"],
+          duration: "1天上山 + 1天日出",
+          intensity: "低-中",
+          badge: "省力",
+          badgeClass: "b-ok",
+          route: "白天索道/徒步到金顶 → 住营地 → 凌晨轻装看日出",
+          highlights: ["最省体力看日出", "更适合端午人多与雨雾"],
+          keyNotes: [
+            "白天上山：看日落与星空；凌晨 3:00-4:00 轻装占位看日出",
+            "适合带老人/新手，也适合“想体验夜间但不想通宵”的人",
+            "端午房源紧张：优先订离金顶近、好找路的营地"
+          ],
+          schedule: [
+            { day: "Day 1", text: "白天抵达景区 → 索道/徒步上山 → 金顶附近营地入住 → 日落/星空" },
+            { day: "Day 2", text: "凌晨轻装去金顶石碑 → 看日出 → 索道下撤" }
+          ],
+          transport: ["景区交通 + 索道组合（省力）"],
+          mustGear: ["冲锋衣/雨具", "保暖层", "充电宝", "保温杯"]
+        },
+        {
+          id: "F",
+          name: "夜爬 · 通宵上山等日出（石鼓寺线）",
+          kind: "夜爬",
+          overnight: false,
+          nightHike: true,
+          fitness: ["mid", "strong"],
+          duration: "通宵",
+          intensity: "高强度",
+          badge: "高风险",
+          badgeClass: "b-risk",
+          route: "石鼓寺 → 猴谷（部分有灯）→ 好汉坡（无灯）→ 吊马桩 → 金顶日出",
+          highlights: ["夏季星空/银河", "直达金顶日出", "体验武功山夜爬特色"],
+          keyNotes: [
+            "灯光真相：只有猴谷及之前部分有灯；好汉坡开始基本无路灯",
+            "建议 22:00–24:00 出发，最晚 1:00 前通过好汉坡关键段",
+            "大雾/下雨/强风时不建议硬上，视野差会显著增加风险"
+          ],
+          schedule: [{ day: "夜间", text: "23:00 左右石鼓寺出发 → 5:00 前后抵达金顶区域 → 日出后及时补能 → 索道/步道下撤" }],
+          transport: ["夜爬多为景区线进入；日出后优先索道下撤避免疲劳下坡"],
+          mustGear: ["头灯/强光手电 + 备电", "冲锋衣/保暖层", "2-3L 水 + 路粮", "登山杖（探路+下坡）"]
+        }
+      ];
+
+      const state = {
+        overnight: null,
+        direction: null,
+        night: null,
+        fitness: null
+      };
+
+      function readStateFromUI() {
+        const get = (name) => (document.querySelector(`input[name="${name}"]:checked`) || {}).value || null;
+        state.overnight = get("overnight");
+        state.direction = get("direction");
+        state.night = get("night");
+        state.fitness = get("fitness");
+      }
+
+      function encodeQuery() {
+        const p = new URLSearchParams();
+        if (state.overnight) p.set("overnight", state.overnight);
+        if (state.direction) p.set("direction", state.direction);
+        if (state.night) p.set("night", state.night);
+        if (state.fitness) p.set("fitness", state.fitness);
+        const q = p.toString();
+        const base = location.href.split("?")[0].split("#")[0];
+        return q ? `${base}?${q}` : base;
+      }
+
+      function applyQueryToUI() {
+        const p = new URLSearchParams(location.search);
+        const set = (name) => {
+          const v = p.get(name);
+          if (!v) return;
+          const el = document.querySelector(`input[name="${name}"][value="${v}"]`);
+          if (el) el.checked = true;
+        };
+        set("overnight");
+        set("direction");
+        set("night");
+        set("fitness");
+      }
+
+      function chipText() {
+        const parts = [];
+        if (state.overnight) parts.push(state.overnight === "on" ? "住山上" : "不住");
+        if (state.direction) parts.push({ reverse: "反穿", forward: "正穿", scenic: "景区线" }[state.direction]);
+        if (state.night) parts.push(state.night === "yes" ? "夜爬" : "不夜爬");
+        if (state.fitness) parts.push({ new: "新手", mid: "中等", strong: "强" }[state.fitness]);
+        return parts.length ? parts.join(" · ") : "未完成";
+      }
+
+      function miniTipText() {
+        if (!state.overnight || !state.direction || !state.night || !state.fitness) return "完成四个选择后生成方案。";
+        if (state.night === "yes" && state.fitness === "new") return "夜爬对新手不友好：更建议改为“住金顶省力看日出”。";
+        if (state.overnight === "off" && state.direction === "forward") return "正穿当日往返强度很高：建议至少住1晚，或改反穿/景区线。";
+        return "已完成选择，可复制链接分享给同伴。";
+      }
+
+      function matchPlans() {
+        const isComplete = !!(state.overnight && state.direction && state.night && state.fitness);
+        if (!isComplete) return [];
+
+        const wantsNight = state.night === "yes";
+        const wantsOvernight = state.overnight === "on";
+        const dir = state.direction;
+
+        const candidates = PLANS.filter((p) => p.fitness.includes(state.fitness));
+
+        const scored = candidates
+          .map((p) => {
+            let score = 0;
+
+            if (wantsNight) {
+              if (p.nightHike) score += 50;
+              else score -= 12;
+            } else {
+              if (!p.nightHike) score += 12;
+              else score -= 18;
+            }
+
+            if (wantsOvernight) {
+              if (p.overnight) score += 30;
+              else score -= 10;
+            } else {
+              if (!p.overnight) score += 18;
+              else score -= 8;
+            }
+
+            if (dir === "reverse" && p.kind === "反穿") score += 26;
+            if (dir === "forward" && p.kind === "正穿") score += 26;
+            if (dir === "scenic" && (p.kind === "景区线" || p.kind === "夜爬")) score += 26;
+
+            if (wantsNight && wantsOvernight && p.id === "E") score += 10;
+            if (!wantsNight && wantsOvernight && p.id === "A") score += 8;
+            if (!wantsOvernight && dir === "reverse" && state.fitness === "strong" && p.id === "B") score += 8;
+
+            if (state.fitness === "new" && (p.id === "B" || p.id === "D" || p.id === "F")) score -= 40;
+            if (state.fitness === "mid" && p.id === "D") score -= 10;
+
+            return { p, score };
+          })
+          .sort((a, b) => b.score - a.score);
+
+        const top = scored.slice(0, 2).filter((x) => x.score > 0);
+        if (!top.length) return [];
+        return top.map((x) => x.p);
+      }
+
+      function planBadge(p) {
+        return `<span class="badge ${p.badgeClass}">${p.badge}</span>`;
+      }
+
+      function renderPlan(p) {
+        const notes = p.keyNotes.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+        const hi = p.highlights.map((x) => `<span class="tag"><b>亮点</b>${escapeHtml(x)}</span>`).join("");
+        const sched = p.schedule.map((s) => `<div class="kvs"><div><b>${escapeHtml(s.day)}</b>：${escapeHtml(s.text)}</div></div>`).join("");
+        const trans = p.transport.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+        const gear = p.mustGear.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+
+        const riskHint =
+          p.badgeClass === "b-risk"
+            ? `<div class="notice" style="border-left-color: rgba(255,107,107,0.9)"><b>风险提示：</b>大雾/降雨/强风时建议果断改索道或下撤，不要硬撑。</div>`
+            : "";
+
+        return `
+          <article class="plan">
+            <div class="top">
+              <div class="name">
+                <h3>方案 ${p.id}｜${escapeHtml(p.name)}</h3>
+                ${planBadge(p)}
+              </div>
+              <div class="meta">
+                <span>时长：${escapeHtml(p.duration)}</span>
+                <span>强度：${escapeHtml(p.intensity)}</span>
+                <span>线路：${escapeHtml(p.route)}</span>
+              </div>
+              <div class="bar">${hi}</div>
+            </div>
+            <div class="body">
+              ${riskHint}
+              <div class="cols cols2">
+                <div class="cols">
+                  <div class="kvs"><div><b>行程节奏</b></div></div>
+                  ${sched}
+                  <div class="hr"></div>
+                  <div class="kvs"><div><b>关键提醒</b></div></div>
+                  <ul class="clean">${notes}</ul>
+                </div>
+                <div class="cols">
+                  <div class="kvs"><div><b>交通/下撤建议</b></div></div>
+                  <ul class="clean">${trans}</ul>
+                  <div class="hr"></div>
+                  <div class="kvs"><div><b>必带装备（最少）</b></div></div>
+                  <ul class="clean">${gear}</ul>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function render() {
+        readStateFromUI();
+        $("#chipState").textContent = chipText();
+        $("#miniTip").textContent = miniTipText();
+
+        const plans = matchPlans();
+        const r = $("#result");
+        if (!plans.length) {
+          r.innerHTML =
+            "<div class='muted'>还差一步：完成左侧四个选择，就会出现推荐方案。若你已经全选但没有出现方案，点击“重置”再试一次。</div>";
+          $("#shareUrl").value = encodeQuery();
+          $("#btnCopy").disabled = true;
+          return;
+        }
+
+        r.innerHTML = plans.map(renderPlan).join("");
+        $("#shareUrl").value = encodeQuery();
+        $("#btnCopy").disabled = false;
+      }
+
+      function resetAll() {
+        $$("input[type=radio]").forEach((el) => (el.checked = false));
+        location.hash = "";
+        history.replaceState(null, "", location.href.split("?")[0].split("#")[0]);
+        render();
+      }
+
+      function startScroll() {
+        $("#wizard").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function copyShare() {
+        const input = $("#shareUrl");
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        const text = input.value;
+
+        const done = () => {
+          $("#copyHint").textContent = "已复制，可直接发给同伴打开。";
+          setTimeout(() => ($("#copyHint").textContent = ""), 2200);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(done)
+            .catch(() => fallbackCopy(text, done));
+        } else {
+          fallbackCopy(text, done);
+        }
+      }
+
+      function fallbackCopy(text, done) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        ta.style.top = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          done();
+        } catch {
+          $("#copyHint").textContent = "复制失败：请手动选中链接复制。";
+        } finally {
+          ta.remove();
+        }
+      }
+
+      function wire() {
+        $$("input[type=radio]").forEach((el) => el.addEventListener("change", () => {
+          render();
+          history.replaceState(null, "", encodeQuery());
+        }));
+
+        $("#btnReset").addEventListener("click", resetAll);
+        $("#btnStart").addEventListener("click", startScroll);
+        $("#btnPrint").addEventListener("click", () => window.print());
+        $("#btnCopy").addEventListener("click", copyShare);
+      }
+
+      applyQueryToUI();
+      wire();
+      render();
+    </script>
+  </body>
+</html>
